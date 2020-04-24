@@ -1,6 +1,8 @@
 'use strict'
 
 const express = require("express");
+// getting cookie parser -kev-
+const cookieParser = require('cookie-parser');
 const fs = require("fs");
 
 // Needed to parse the request body
@@ -30,7 +32,7 @@ function generateAndSendPage(response)
 	// Read the comments file
 	// @error - if there an error
 	// @data - the data read
-	fs.readFile("comments.txt", function(error, data)
+	fs.readFile("mostSecured.txt", function(error, data)
 	{
 		// If the read fails
 		if(error) throw error;
@@ -47,16 +49,19 @@ function generateAndSendPage(response)
 		pageStr += "		<title>Guestbook </title>";
 		pageStr += "	</head>";
 		pageStr += "	<body bgcolor=white>";
-		pageStr += "	   <h1>What others have said:</h1><br>";
+		pageStr += "	   <h1>Please Login to continue:</h1><br>";
 		pageStr += commentsData;
 		pageStr += "	    <form action='/guestbook' method='post'>";
-		pageStr += "        	    <label for='comment'>Message:</label>";
-		pageStr += "	            <textarea id='comment' name='comment' placeholder='Whats on your mind?'></textarea><br><br>";
-		pageStr += "        	    <input type='submit' value='Send message' />";
+		pageStr += "        	    <label for='user'>Username:</label>";
+		pageStr += "                <input type='text' name ='user></input>";
+		pageStr += "                <label for='password'>password:</label>";
+		pageStr += "                <input type='password' name='password'";
+		pageStr += "	            <input type='submit' value='Authorize Login'>";
 		pageStr += "	    </form>";
 		pageStr += "	</body>";
 		pageStr += "</html>	";
-			
+		
+
 		// Send the page
 		response.send(pageStr);	
 	});
@@ -66,6 +71,21 @@ function generateAndSendPage(response)
 // Handles the sending of the index
 app.get("/guestbook", function(req, res){
 	
+	//cooking the cookie
+	let loggedin = req.cookies.session_id;
+
+	// no cookie lets assign one
+	if (loggedin === undefined){
+		let randomNumber = Math.random().toString();
+		randomNumber = randomNumber.substr(2,randomNumber.length);
+		// expires in 300 seconds
+		res.loggedin(randomNumber,{expires: new Date(Date.now() + 3000000)})
+		console.log('Cookie created: ' + randomNumber)
+	}
+	// cookie exist
+	else{
+		console.log('Cookie Exist: '. loggedin)
+	}
 		
 	// Generate the page
 	generateAndSendPage(res);
