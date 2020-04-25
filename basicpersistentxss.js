@@ -84,7 +84,7 @@ app.get("/guestbook", function(req, res){
 	}
 	// cookie exist
 	else{
-		console.log('Cookie Exist: '. cookie)
+		console.log('Cookie Exist: ', cookie);
 	}
 		
 	// Generate the page
