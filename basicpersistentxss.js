@@ -9,7 +9,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const app     = express();
 
-
+app.use(cookieParser());
 // Needed to parse the request body
 //Note that in version 4 of express, express.bodyParser() was
 //deprecated in favor of a separate 'body-parser' module.
@@ -72,19 +72,19 @@ function generateAndSendPage(response)
 app.get("/guestbook", function(req, res){
 	
 	//cooking the cookie
-	let loggedin = req.cookies.session_id;
+	let cookie = req.cookies.session_id;
 
 	// no cookie lets assign one
-	if (loggedin === undefined){
+	if (cookie === undefined){
 		let randomNumber = Math.random().toString();
 		randomNumber = randomNumber.substr(2,randomNumber.length);
 		// expires in 300 seconds
-		res.loggedin(randomNumber,{expires: new Date(Date.now() + 3000000)})
+		res.cookie('session_id',randomNumber, { expires: new Date(Date.now() + 3000000)});
 		console.log('Cookie created: ' + randomNumber)
 	}
 	// cookie exist
 	else{
-		console.log('Cookie Exist: '. loggedin)
+		console.log('Cookie Exist: '. cookie)
 	}
 		
 	// Generate the page
