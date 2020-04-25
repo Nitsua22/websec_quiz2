@@ -56,7 +56,8 @@ function generateAndSendPage(response)
 		pageStr += "                <input type='text' name ='user></input>";
 		pageStr += "                <label for='password'>password:</label>";
 		pageStr += "                <input type='password' name='password'";
-		pageStr += "	            <input type='submit' value='Authorize Login'>";
+		pageStr += "                <br>";
+		pageStr += "	            <input type='submit' value='submit'>";
 		pageStr += "	    </form>";
 		pageStr += "	</body>";
 		pageStr += "</html>	";
