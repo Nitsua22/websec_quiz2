@@ -32,13 +32,17 @@ function generateAndSendPage(response)
 	// Read the comments file
 	// @error - if there an error
 	// @data - the data read
-	fs.readFile("mostSecured.txt", function(error, data)
+	fs.readFile("mostSecured.txt", 'utf8', function(error, data)
 	{
 		// If the read fails
 		if(error) throw error;
 		
 		// The comments data
 		let commentsData = "" + data;
+
+		let dataArray = data.replace(/\n/g, " ").split(" ")
+
+		console.log(dataArray)
 
 		// Replace the newlines with HTML <br>
 		commentsData = replaceAll(commentsData, "\n", "<br>");
