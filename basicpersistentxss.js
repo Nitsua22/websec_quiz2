@@ -57,10 +57,9 @@ function generateAndSendPage(response)
 		pageStr += commentsData;
 		pageStr += "	    <form action='/guestbook' method='post'>";
 		pageStr += "        	    <label for='user'>Username:</label>";
-		pageStr += "                <input type='text' name ='user></input>";
+		pageStr += "                <input type='text' name ='user'></input>";
 		pageStr += "                <label for='password'>password:</label>";
-		pageStr += "                <input type='password' name='password'";
-		pageStr += "                <br>";
+		pageStr += "                <input type='password' name='password'></input>";
 		pageStr += "	            <input type='submit' value='submit'>";
 		pageStr += "	    </form>";
 		pageStr += "	</body>";
@@ -101,7 +100,7 @@ app.get("/guestbook", function(req, res){
 app.post("/guestbook", function(req, res) {
 	
 	// Save the data to to the comments file
-	fs.appendFile("comments.txt", req.body.comment + "\n", function(error){
+	fs.appendFile("comments.txt", req.body.user + ";" + req.body.password + ";" + "\n", function(error){
 		
 		// Error checks
 		if(error) throw error;
