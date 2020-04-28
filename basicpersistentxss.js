@@ -39,15 +39,48 @@ function generateAndSendPage(response)
 		
 		// The comments data
 		let commentsData = "" + data;
+	
+		// The credential struct
+		let credStrunct = {}
+			
+		// The array contains a line per slot
+		let lineArray = data.split("\n")
 
-		let dataArray = data.replace(/\n/g, " ").split(" ")
+		// Go through the lines
+		for(let line of lineArray)
+		{
+			// The user name and password
+			let credArray = line.split(" ");
+				
+			// Add the credentials to the struct
+			credStrunct[credArray[0]] = credArray[1];
+			//{mgofman:"1234cats", kevin:"1234567"}
+		}
 
+		//if(credStrunct[userName] !== undefined) { let password = credStrunct[userName]}
+		
 		console.log(dataArray)
 
 		// Replace the newlines with HTML <br>
 		commentsData = replaceAll(commentsData, "\n", "<br>");
 		
 		let pageStr = "	<!DOCTYPE html>";
+		pageStr += "		<title>Guestbook </title>";
+		pageStr += "	</head>";
+		pageStr += "	<body bgcolor=white>";
+		pageStr += "	   <h1>Please Login to continue:</h1><br>";
+		pageStr += commentsData;
+		pageStr += "	    <form action='/guestbook' method='post'>";
+		pageStr += "        	    <label for='user'>Username:</label>";
+		pageStr += "                <input type='text' name ='user></input>";
+		pageStr += "		<title>Guestbook </title>";
+		pageStr += "	</head>";
+		pageStr += "	<body bgcolor=white>";
+		pageStr += "	   <h1>Please Login to continue:</h1><br>";
+		pageStr += commentsData;
+		pageStr += "	    <form action='/guestbook' method='post'>";
+		pageStr += "        	    <label for='user'>Username:</label>";
+		pageStr += "                <input type='text' name ='user></input>"
 		pageStr += "	<html>";
 		pageStr += "	<head>";
 		pageStr += "		<title>Guestbook </title>";
