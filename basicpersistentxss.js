@@ -59,30 +59,11 @@ function generateAndSendPage(response)
 
 		//if(credStrunct[userName] !== undefined) { let password = credStrunct[userName]}
 		
-		console.log(dataArray)
 
 		// Replace the newlines with HTML <br>
 		commentsData = replaceAll(commentsData, "\n", "<br>");
 		
 		let pageStr = "	<!DOCTYPE html>";
-		pageStr += "		<title>Guestbook </title>";
-		pageStr += "	</head>";
-		pageStr += "	<body bgcolor=white>";
-		pageStr += "	   <h1>Please Login to continue:</h1><br>";
-		pageStr += commentsData;
-		pageStr += "	    <form action='/guestbook' method='post'>";
-		pageStr += "        	    <label for='user'>Username:</label>";
-		pageStr += "                <input type='text' name ='user></input>";
-		pageStr += "		<title>Guestbook </title>";
-		pageStr += "	</head>";
-		pageStr += "	<body bgcolor=white>";
-		pageStr += "	   <h1>Please Login to continue:</h1><br>";
-		pageStr += commentsData;
-		pageStr += "	    <form action='/guestbook' method='post'>";
-		pageStr += "        	    <label for='user'>Username:</label>";
-		pageStr += "                <input type='text' name ='user></input>"
-		pageStr += "	<html>";
-		pageStr += "	<head>";
 		pageStr += "		<title>Guestbook </title>";
 		pageStr += "	</head>";
 		pageStr += "	<body bgcolor=white>";
@@ -107,9 +88,9 @@ function generateAndSendPage(response)
 
 // Handles the sending of the index
 app.get("/guestbook", function(req, res){
-	
 	//cooking the cookie
 	let cookie = req.cookies.session_id;
+
 
 	// no cookie lets assign one
 	if (cookie === undefined){
@@ -121,7 +102,7 @@ app.get("/guestbook", function(req, res){
 	}
 	// cookie exist
 	else{
-		console.log('Cookie Exist: ', cookie);
+		console.log('Cookie Exist: ', cookie, );
 	}
 		
 	// Generate the page
@@ -134,11 +115,11 @@ app.post("/guestbook", function(req, res) {
 	
 	// Save the data to to the comments file
 	fs.appendFile("comments.txt", req.body.user + ";" + req.body.password + ";" + "\n", function(error){
-		
+		console.log(req.body.user)
 		// Error checks
 		if(error) throw error;
 		
-		generateAndSendPage(res);
+		res.send("Welcome back: " + req.body.user);
 	
 	});	
 
