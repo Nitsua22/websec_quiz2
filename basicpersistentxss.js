@@ -2,6 +2,7 @@
 
 const express = require("express");
 const csp = require('helmet-csp');
+const xssFilters = require('xss-filters');
 // getting cookie parser -kev-
 const cookieParser = require('cookie-parser');
 const fs = require("fs");
@@ -117,7 +118,7 @@ app.get("/guestbook", function(req, res){
 	}
 	// cookie exist
 	else{
-		console.log('Cookie Exist: ', cookie,  + " " + user);
+		console.log('Cookie Exist: ', cookie,  + " " + xssFilters.inHTMLData(req.body.user));
 	}
 		
 	// Generate the page
@@ -129,12 +130,12 @@ app.get("/guestbook", function(req, res){
 app.post("/guestbook", function(req, res) {
 	
 	// Save the data to to the comments file
-	fs.appendFile("comments.txt", req.body.user + ";" + req.body.password + ";" + "\n", function(error){
-		console.log(req.body.user)
+	fs.appendFile("comments.txt", xssFilters.inHTMLData(req.body.user) + ";" + xssFilters.inHTMLData(req.body.password) + ";" + "\n", function(error){
+		console.log(xssFilters.inHTMLData(req.body.user))
 		// Error checks
 		if(error) throw error;
 		
-		res.send("Welcome back: " + req.body.user);
+		res.send("Welcome back: " + xssFilters.inHTMLData(req.body.user));
 	
 	});	
 
